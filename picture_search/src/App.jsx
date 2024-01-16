@@ -9,16 +9,22 @@ function App() {
     setSearchInput(e.target.value);
   };
 
+  const removeButtonClick = () => {
+    setSearchInput("");
+  };
+
   const buttonClick = () => {
     setFigureUrl(`https://source.unsplash.com/100x100/?${searchInput}`);
   };
   return (
     <>
       <button onClick={buttonClick}>Search</button>
+      <button onClick={removeButtonClick}>Empty</button>
       <input
         type="text"
         placeholder="Write here"
         onChange={handleChange}
+        value={searchInput}
       ></input>
       <img src={searchInput == "" ? null : figureUrl} />
     </>
