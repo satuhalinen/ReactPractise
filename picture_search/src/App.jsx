@@ -3,9 +3,9 @@ import { useState } from "react";
 
 function App() {
   const [searchInput, setSearchInput] = useState("");
-  const [figureUrl, setFigureUrl] = useState("");
   const defaultSize = "100";
   const [size, setSize] = useState(defaultSize);
+  const [results, setResults] = useState([]);
 
   const handleChange = (e) => {
     setSearchInput(e.target.value);
@@ -16,7 +16,13 @@ function App() {
   };
 
   const buttonClick = () => {
-    setFigureUrl(`https://source.unsplash.com/${size}x${size}/?${searchInput}`);
+    let resultsCopy = [...results];
+    let newUrl = `https://source.unsplash.com/${size}x${size}/?${searchInput}`;
+    resultsCopy.unshift(newUrl);
+    if (resultsCopy.length === 4) {
+      resultsCopy.pop();
+    }
+    setResults(resultsCopy);
   };
 
   const sizeHandler = (event) => {
@@ -38,7 +44,9 @@ function App() {
         onChange={handleChange}
         value={searchInput}
       ></input>
-      <img src={searchInput == "" ? null : figureUrl} />
+      {results.map((result) => (
+        <img key={result} src={result} />
+      ))}
     </>
   );
 }
